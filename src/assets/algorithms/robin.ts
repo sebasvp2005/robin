@@ -28,6 +28,10 @@ export const Robin = (arr : Array<Array<number>>, quan : number ) :Array<Array<s
         temp.push([arr[e][1], e])
       }
     }
+    for(let j=0; j<temp.length; j++){
+      q.push_back(temp[j][1])
+    }
+    
     matrix.push(Array<string>(n).fill(""))
     if(q.size()){
       let cur = q.front();
@@ -43,7 +47,8 @@ export const Robin = (arr : Array<Array<number>>, quan : number ) :Array<Array<s
         cur = q.front();
         if(cnt==quan){
           q.pop_front();
-          temp.push([arr[cur][1], cur])
+          console.log(i, cur)
+          q.push_back(cur)
           cnt=0;
         }
 
@@ -51,12 +56,7 @@ export const Robin = (arr : Array<Array<number>>, quan : number ) :Array<Array<s
 
     }
   
-
-    temp.sort((a,b)=>a[0]-b[0])
-
-    for(let j=0; j<temp.length; j++){
-      q.push_back(temp[j][1])
-    }
+    
 
     for(let t=0;t<q.size(); t++){
       matrix[matrix.length -1][q.at(t)] = t.toString();
