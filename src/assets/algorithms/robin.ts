@@ -21,35 +21,51 @@ export const Robin = (arr : Array<Array<number>>, quan : number ) :Array<Array<s
   let cnt = 0;
 
   while(count!=n) {
+
+    let temp :Array<Array<number>> = []
     if(m.has(i)){
       for(const e of m.get(i)){
-        q.push(e)
+        temp.push([arr[e][1], e])
       }
     }
     matrix.push(Array<string>(n).fill(""))
-    if(!q.size()){i++;continue}
-    let cur = q.front();
-    if(arr[cur][1]==0){
-      cnt=0;
-      matrix[matrix.length -1][cur] = "F";
-      q.pop_front();
-      count++;
+    if(q.size()){
+      let cur = q.front();
+      if(arr[cur][1]==0){
+        cnt=0;
+        matrix[matrix.length -1][cur] = "F";
+        q.pop_front();
+        count++;
+      }
+
+      if(q.size()){  
+  
+        cur = q.front();
+        if(cnt==quan){
+          q.pop_front();
+          temp.push([arr[cur][1], cur])
+          cnt=0;
+        }
+
+      }
+
     }
-    if(!q.size()) {i++;continue;}
-    cur = q.front();
-    if(cnt==quan){
-      q.pop_front();
-      q.push_back(cur);
-      cnt=0;
+  
+
+    temp.sort((a,b)=>a[0]-b[0])
+
+    for(let j=0; j<temp.length; j++){
+      q.push_back(temp[j][1])
     }
+
     for(let t=0;t<q.size(); t++){
       matrix[matrix.length -1][q.at(t)] = t.toString();
     }
 
-    arr[q.front()][1]--;
-    cnt++;
-
-
+    if(q.size()){
+      arr[q.front()][1]--;
+      cnt++;
+    }
     i++
   }
   
